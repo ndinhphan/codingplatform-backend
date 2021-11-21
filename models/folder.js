@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
       as: "project",
       onDelete: "CASCADE",
     });
-    //does this work?
+    //work?
     Folder.belongsTo(models.Folder, {
       foreignKey: { name: "folderId", allowNull: false },
       as: "parentFolder",

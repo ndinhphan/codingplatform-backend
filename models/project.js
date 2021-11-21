@@ -10,7 +10,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       notEmpty: true,
     },
+    description: {
+      type: DataTypes.STRING,
+    },
     rootpath: {
+      type: DataTypes.STRING,
+      notEmpty: true,
+    },
+    type: {
       type: DataTypes.STRING,
       notEmpty: true,
     },
@@ -18,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
   Project.associate = (models) => {
     Project.belongsTo(models.User, {
       foreignKey: { name: "userId", allowNull: false },
-      as: "author",
       onDelete: "CASCADE",
     });
     Project.hasMany(models.File, {

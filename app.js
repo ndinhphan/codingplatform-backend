@@ -7,6 +7,7 @@ const { connectToDb, getDb } = require("./config/database.js");
 const middleware = require("./utils/middleware");
 
 const authRouter = require("./controllers/auth");
+const projectRouter = require("./controllers/project.js");
 
 app.use(cors());
 app.use(express.json());
@@ -31,11 +32,15 @@ app.get("/", (req, res) => {
   res.send("Server is online.");
 });
 
+app.use(middleware.tokenExtractor);
+// app.use(middleware.userExtractor);
+
+app.use("/api/", authRouter);
+app.use("/api/project/", projectRouter);
+
 // app.use('/api/users',usersRouter);
 // app.use('/api/blogs',blogsRouter);
 // app.use('/api/login',loginRouter);
-
-app.use("/api/", authRouter);
 
 app.use(middleware.errorHandler);
 app.use(middleware.unknownEndpoint);

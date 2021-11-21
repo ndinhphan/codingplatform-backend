@@ -2,6 +2,9 @@ const authRouter = require("express").Router();
 const { EMAIL_REGEX } = require("../utils/constants");
 const bcrypt = require("bcryptjs");
 const { getDb } = require("../config/database");
+const { generateToken } = require("../config/jwt");
+
+const middleware = require("../utils/middleware");
 // register
 authRouter.post("/register", async (req, res) => {
   const { username, email, password } = req.body;
@@ -38,10 +41,7 @@ authRouter.post("/register", async (req, res) => {
       email,
       password: passwordHash,
     });
-    // const savedUser = await db.User.findOne({
-    //   attributes: ["id", "username", "email"],
-    //   where: { email },
-    // });
+
     return res.status(201).json({ message: "User created!" });
   } catch (error) {
     console.log(error);
@@ -53,4 +53,50 @@ authRouter.post("/register", async (req, res) => {
 
 //login
 
+authRouter.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  const db = getDb();
+  try {
+    const foundUserByUsername = await db.User.findOne({
+      attributes: ["id", "password", "username", "email"],
+      where: { username },
+    });
+    if (foundUserByUsername) {
+      if (
+        bcrypt.compareSync(password, foundUserByUsername.dataValues.password)
+      ) {
+        const userData = {
+          id: foundUserByUsername.dataValues.id,
+          username: foundUserByUsername.dataValues.username,
+          email: foundUserByUsername.dataValues.email,
+        };
+
+        // const token = await jwtToken.generateToken(userData);
+        const accessToken = generateToken(userData);
+        return res.status(200).json({
+          message: "Login success!",
+          ...userData,
+          accessToken,
+        });
+      } else {
+        return res.status(401).json("Wrong Credentials!");
+      }
+    } else {
+      return res.status(401).json("Wrong Credentials!");
+    }
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ error, message: "Cannot log in at the moment" });
+  }
+});
+
+//authorize
+
+authRouter.post("/authorize", middleware.userExtractor, async (req, res) => {
+  if (req.user) {
+    res.status(200).json({ message: "authorized!", ...req.user });
+  }
+});
 module.exports = authRouter;
