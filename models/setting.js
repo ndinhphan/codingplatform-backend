@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
   });
   Setting.associate = (models) => {
     Setting.belongsTo(models.Project, {
-      // foreignKey: { name: "projectId", allowNull: false },
+      foreignKey: { name: "projectId" },
       as: "project",
       onDelete: "CASCADE",
     });

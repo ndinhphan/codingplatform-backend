@@ -86,3 +86,7 @@ typings/
 
 # Environment files
 .env
+
+
+# Projects information
+public/projects

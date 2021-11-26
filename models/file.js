@@ -13,12 +13,12 @@ module.exports = (sequelize, DataTypes) => {
   });
   File.associate = (models) => {
     File.belongsTo(models.Project, {
-      foreignKey: { name: "projectId", allowNull: false },
+      foreignKey: { name: "projectId" },
       as: "project",
       onDelete: "CASCADE",
     });
     File.belongsTo(models.Folder, {
-      foreignKey: { name: "folderId", allowNull: false },
+      foreignKey: { name: "folderId" },
       as: "folder",
       onDelete: "CASCADE",
     });

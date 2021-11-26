@@ -13,18 +13,18 @@ module.exports = (sequelize, DataTypes) => {
   });
   Folder.associate = (models) => {
     Folder.belongsTo(models.Project, {
-      foreignKey: { name: "projectId", allowNull: false },
+      foreignKey: { name: "projectId" },
       as: "project",
       onDelete: "CASCADE",
     });
     //work?
     Folder.belongsTo(models.Folder, {
-      foreignKey: { name: "folderId", allowNull: false },
+      foreignKey: { name: "folderId" },
       as: "parentFolder",
       onDelete: "CASCADE",
     });
     Folder.hasMany(models.File, {
-      foreignKey: { name: "folderId", allowNull: false },
+      foreignKey: { name: "folderId" },
       as: "files",
       onDelete: "CASCADE",
     });

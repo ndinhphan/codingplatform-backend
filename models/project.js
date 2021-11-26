@@ -24,16 +24,16 @@ module.exports = (sequelize, DataTypes) => {
   });
   Project.associate = (models) => {
     Project.belongsTo(models.User, {
-      foreignKey: { name: "userId", allowNull: false },
+      foreignKey: { name: "userId" },
       onDelete: "CASCADE",
     });
     Project.hasMany(models.File, {
-      foreignKey: { name: "projectId", allowNull: false },
+      foreignKey: { name: "projectId" },
       as: "files",
       onDelete: "CASCADE",
     });
     Project.hasMany(models.Folder, {
-      foreignKey: { name: "projectId", allowNull: false },
+      foreignKey: { name: "projectId" },
       as: "folders",
       onDelete: "CASCADE",
     });

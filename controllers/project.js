@@ -23,9 +23,14 @@ projectRouter.post("/", middleware.userExtractor, async (req, res) => {
       name,
       description,
       type,
-      userId: req.user.id,
     });
-
+    await newProject.setUser(req.user);
+    // load saved project with user data
+    // const addedProject = await db.Project.findOne({
+    //   where: { id: newProject.id },
+    //   include: db.User,
+    // });
+    // console.log(addedProject.dataValues.User.dataValues);
     res.status(201).json(newProject.dataValues);
   } catch (error) {
     console.log(error);
