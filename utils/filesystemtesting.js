@@ -19,9 +19,18 @@ const files = {
 };
 deleteFolder({ folderPath: projectRootPath });
 createFolder({ folderPath: projectRootPath });
+//create files
 for (const [filePath, content] of Object.entries(files)) {
-  console.log(filePath);
   createFile({ filePath: path.join(projectRootPath, filePath) });
   updateFile({ filePath: path.join(projectRootPath, filePath), content });
+  // renameFile({
+  //   filePath: path.join(projectRootPath, filePath),
+  //   newFilePath: path.join(projectRootPath, filePath + "NEW"),
+  // });
 }
+//read all files
+for (let filePath of Object.keys(files)) {
+  console.log(readFile({ filePath: path.join(projectRootPath, filePath) }));
+}
+
 // deleteFolder({ folderPath: projectRootPath });

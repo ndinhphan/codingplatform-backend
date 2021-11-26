@@ -1,7 +1,6 @@
 const fs = require("fs");
 const path = require("path");
 const { publicProjectPath } = require("../utils/constants");
-const filename = "testname.txt";
 
 const createFile = ({ filePath }) => {
   if (!filePath) throw new Error("filePath cannot be empty!");
