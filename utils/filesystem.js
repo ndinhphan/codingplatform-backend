@@ -31,6 +31,7 @@ const readFile = ({ filePath }) => {
 };
 
 const updateFile = ({ filePath, content }) => {
+  // TODO:trim content before updating
   if (!filePath) throw new Error("filePath cannot be empty!");
   if (!content) throw new Error("file content cannot be empty!");
   if (!fs.existsSync(path.join(publicProjectPath, filePath)))

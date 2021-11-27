@@ -51,6 +51,7 @@ const userExtractor = async (request, response, next) => {
       } else {
         request.user = null;
         logger.info("User does not exist in database");
+        return response.status(401).json("Invalid Token!");
       }
     } catch (error) {
       logger.info("Invalid token!");
