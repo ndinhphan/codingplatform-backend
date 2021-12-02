@@ -103,6 +103,7 @@ projectRouter.put("/:id", middleware.userExtractor, async (req, res) => {
 });
 
 // delete project from projectid
+// deletes project rootpath and project database entry
 projectRouter.delete("/:id", middleware.userExtractor, async (req, res) => {
   const db = getDb();
   try {
@@ -114,7 +115,6 @@ projectRouter.delete("/:id", middleware.userExtractor, async (req, res) => {
     if (
       findProjectById.dataValues.User.dataValues.id === req.user.dataValues.id
     ) {
-      //do something here
       deleteFolder({ folderPath: findProjectById.dataValues.rootpath });
       await findProjectById.destroy();
       return res.status(204).end();

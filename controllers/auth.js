@@ -60,6 +60,7 @@ authRouter.post("/login", async (req, res) => {
     const foundUserByUsername = await db.User.findOne({
       attributes: ["id", "password", "username", "email"],
       where: { username },
+      // include: [{ model: db.Project, as: "projects" }],
     });
     if (foundUserByUsername) {
       if (
@@ -70,13 +71,16 @@ authRouter.post("/login", async (req, res) => {
           username: foundUserByUsername.dataValues.username,
           email: foundUserByUsername.dataValues.email,
         };
-
+        // const userProjects = foundUserByUsername.dataValues.projects.map(
+        //   (project) => project.dataValues
+        // );
         // const token = await jwtToken.generateToken(userData);
         const accessToken = generateToken(userData);
         return res.status(200).json({
           message: "Login success!",
           ...userData,
           accessToken,
+          // projects: userProjects,
         });
       } else {
         return res.status(401).json("Wrong Credentials!");
@@ -92,7 +96,7 @@ authRouter.post("/login", async (req, res) => {
   }
 });
 
-//authorize
+//authorize test api
 
 authRouter.post("/authorize", middleware.userExtractor, async (req, res) => {
   if (req.user) {
