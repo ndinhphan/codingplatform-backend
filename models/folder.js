@@ -6,9 +6,12 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       type: DataTypes.INTEGER,
     },
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     path: {
       type: DataTypes.STRING,
-      notEmpty: true,
     },
   });
   Folder.associate = (models) => {

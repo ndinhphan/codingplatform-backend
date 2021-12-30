@@ -32,7 +32,9 @@ authRouter.post("/register", async (req, res) => {
   });
 
   if (foundUserByUsername || foundUserByEmail)
-    return res.json({ message: "Username or Email Already in use!" });
+    return res
+      .status(401)
+      .json({ message: "Username or Email Already in use!" });
 
   try {
     const passwordHash = await bcrypt.hash(password, 10);
@@ -83,10 +85,10 @@ authRouter.post("/login", async (req, res) => {
           // projects: userProjects,
         });
       } else {
-        return res.status(401).json("Wrong Credentials!");
+        return res.status(401).json({ message: "Wrong Credentials!" });
       }
     } else {
-      return res.status(401).json("Wrong Credentials!");
+      return res.status(401).json({ message: "Wrong Credentials!" });
     }
   } catch (error) {
     console.log(error);

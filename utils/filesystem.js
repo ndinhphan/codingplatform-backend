@@ -5,7 +5,9 @@ const { publicProjectPath } = require("../utils/constants");
 const createFile = ({ filePath }) => {
   if (!filePath) throw new Error("filePath cannot be empty!");
   if (fs.existsSync(path.join(publicProjectPath, filePath)))
-    throw new Error(`File${filePath} already exists!`);
+    // throw new Error(`File${filePath} already exists!`);
+    throw new Error(`File already exists!`);
+
   try {
     fs.writeFileSync(path.join(publicProjectPath, filePath), "");
   } catch (e) {
@@ -17,7 +19,9 @@ const createFile = ({ filePath }) => {
 const readFile = ({ filePath }) => {
   if (!filePath) throw new Error("filePath cannot be empty!");
   if (!fs.existsSync(path.join(publicProjectPath, filePath)))
-    throw new Error(`File ${filePath} does not exist!`);
+    throw new Error(
+      `File ${path.join(publicProjectPath, filePath)} does not exist!`
+    );
   try {
     let content = fs.readFileSync(
       path.join(publicProjectPath, filePath),
@@ -76,7 +80,8 @@ const deleteFile = ({ filePath }) => {
 const createFolder = ({ folderPath }) => {
   if (!folderPath) throw new Error("folderPath cannot be empty!");
   if (fs.existsSync(path.join(publicProjectPath, folderPath)))
-    throw new Error(`Folder ${folderPath} already exists!`);
+    // throw new Error(`Folder ${folderPath} already exists!`);
+    throw new Error(`Folder already exists!`);
 
   try {
     fs.mkdirSync(path.join(publicProjectPath, folderPath));

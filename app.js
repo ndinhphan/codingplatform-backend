@@ -8,6 +8,8 @@ const middleware = require("./utils/middleware");
 
 const authRouter = require("./controllers/auth");
 const projectRouter = require("./controllers/project.js");
+const folderRouter = require("./controllers/folder.js");
+const fileRouter = require("./controllers/file.js");
 
 app.use(cors());
 app.use(express.json());
@@ -37,6 +39,8 @@ app.use(middleware.tokenExtractor);
 
 app.use("/api/", authRouter);
 app.use("/api/project/", projectRouter);
+app.use("/api/project/", folderRouter);
+app.use("/api/project/", fileRouter);
 
 // app.use('/api/users',usersRouter);
 // app.use('/api/blogs',blogsRouter);

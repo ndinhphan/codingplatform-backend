@@ -47,7 +47,7 @@ async function connectToDb() {
   if (db.Setting.associate) {
     db.Setting.associate(db);
   }
-
+  //true for updating schema
   await sequelize.sync({ force: false });
   console.log(
     `Connected to Mysql Database ${process.env.DB_NAME} with username:${process.env.DB_USERNAME}`
