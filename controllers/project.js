@@ -50,18 +50,17 @@ projectRouter.post("/", middleware.userExtractor, async (req, res) => {
   const { name, description, type } = req.body;
   const db = getDb();
 
-  if (name.length <= 3) {
-    return res.status(400).json({
-      message: "Project name must be longer than 3",
-    });
-  }
-  if (!type) {
-    return res.status(400).json({
-      message: "Project type must be react or vue",
-    });
-  }
-
   try {
+    if (name?.length <= 3) {
+      return res.status(400).json({
+        message: "Project name must be longer than 3",
+      });
+    }
+    if (!type) {
+      return res.status(400).json({
+        message: "Project type must be react or vue",
+      });
+    }
     const newProject = await db.Project.create({
       name,
       description,
